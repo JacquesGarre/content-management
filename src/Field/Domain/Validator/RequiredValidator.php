@@ -12,7 +12,7 @@ final class RequiredValidator extends AbstractValidator {
     public function validate(?Value $value = null): void
     {
         if (!$value || $value->isEmpty()) {
-            throw new RequiredValueValidationException(json_encode($this->error->toArray()));
+            throw new RequiredValueValidationException($this->error);
         }
     }
 }

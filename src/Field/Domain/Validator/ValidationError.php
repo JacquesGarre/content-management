@@ -13,6 +13,8 @@ final class ValidationError {
     }
 
     public function toArray() {
-        return $this->value->toArray();
+        $translation = $this->value->toArray();
+        unset($translation['id']);
+        return $translation;
     }
 }
