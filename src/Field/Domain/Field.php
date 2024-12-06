@@ -16,4 +16,9 @@ final class Field {
     ) {
         
     }
+
+    public function validate(): void
+    {
+        $this->input->validateValue();
+    }
 }

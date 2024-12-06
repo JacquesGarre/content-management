@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Field\Domain\Input;
 
 use App\Field\Domain\Input\Attribute\Name;
-use App\Field\Domain\Validator\ValidationError;
 use App\Field\Domain\Validator\Validators;
 
 abstract class AbstractInput {
