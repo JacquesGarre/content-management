@@ -8,6 +8,7 @@ use App\Field\Domain\Input\TextInput;
 use App\Field\Domain\Validator\Exception\RequiredValueValidationException;
 use App\Field\Domain\Validator\Validators;
 use App\Tests\Stubs\Field\Domain\Input\Attribute\NameStub;
+use App\Tests\Stubs\Field\Domain\Input\Attribute\PlaceholderStub;
 use App\Tests\Stubs\Field\Domain\Input\ValueStub;
 use App\Tests\Stubs\Field\Domain\Validator\RequiredValidatorStub;
 use PHPUnit\Framework\TestCase;
@@ -42,10 +43,12 @@ final class TextInputTest extends TestCase {
         $value = null;
         $validator = RequiredValidatorStub::random();
         $validators = new Validators([$validator]);
-        $input = new TextInput($name, $value, $validators);
+        $placeholder = PlaceholderStub::random();
+        $input = new TextInput($name, $value, $validators, $placeholder);
         assertEquals($name, $input->name);
         assertEquals($value, $input->value);
         assertEquals($validators, $input->validators);
+        assertEquals($placeholder, $input->placeholder);
         $this->expectException(RequiredValueValidationException::class);
         $input->validateValue();
     }
