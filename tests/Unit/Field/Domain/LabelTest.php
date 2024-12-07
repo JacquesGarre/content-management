@@ -15,10 +15,8 @@ final class LabelTest extends TestCase {
 
     public function testFromTranslation(): void
     {   
-        $order = OrderStub::random();
         $translation = TranslationStub::random();
-        $label = new Label($order, $translation);
-        assertEquals($order, $label->order);
+        $label = new Label($translation);
         assertEquals($translation, $label->value);
     }
 }

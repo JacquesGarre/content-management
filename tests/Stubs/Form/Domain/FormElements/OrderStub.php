@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Stubs\Field\Domain;
+namespace App\Tests\Stubs\Form\Domain\FormElements;
 
-use App\Field\Domain\Order;
+use App\Form\Domain\FormElements\Order;
 use Faker\Factory;
 
 final class OrderStub {

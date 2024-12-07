@@ -11,8 +11,7 @@ final class LabelStub {
 
     public static function random(): Label
     {
-        $order = OrderStub::random();
         $translation = TranslationStub::random();
-        return new Label($order, $translation);
+        return new Label($translation);
     }
 }

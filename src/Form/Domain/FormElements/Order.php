@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Field\Domain;
+namespace App\Form\Domain\FormElements;
 
 final class Order {
 

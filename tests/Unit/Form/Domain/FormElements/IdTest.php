@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Field\Domain;
+namespace App\Tests\Unit\Form\Domain\FormElements;
 
-use App\Field\Domain\Id;
-use App\Field\Domain\Exception\InvalidFieldIdException;
+use App\Form\Domain\FormElements\Exception\InvalidFormElementIdException;
+use App\Form\Domain\FormElements\Id;
 use Faker\Factory;
 use PHPUnit\Framework\TestCase;
 
@@ -21,11 +21,11 @@ final class IdTest extends TestCase {
         assertEquals($uuid, $id->value);
     }
 
-    public function testInvalidFieldIdException(): void
+    public function testInvalidFormElementIdException(): void
     {
         $faker = Factory::create();
         $uuid = $faker->word();
-        $this->expectException(InvalidFieldIdException::class);
+        $this->expectException(InvalidFormElementIdException::class);
         Id::fromString($uuid);
     }
 }

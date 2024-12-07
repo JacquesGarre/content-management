@@ -6,7 +6,8 @@ namespace App\Field\Domain;
 
 use App\Field\Domain\Input\AbstractInput;
 use App\Form\Domain\FormElements\AbstractFormElement;
-use App\Form\Domain\FormElements\FormElement;
+use App\Form\Domain\FormElements\Id;
+use App\Form\Domain\FormElements\Order;
 use App\Shared\Style\Domain\CssClass;
 
 final class Field extends AbstractFormElement {
