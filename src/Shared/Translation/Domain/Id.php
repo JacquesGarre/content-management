@@ -18,6 +18,10 @@ final class Id {
         return $this->value->toString();
     }
 
+    public function __toString(): string {
+        return $this->toString();
+    }
+
     public static function fromString(string $value): self 
     {
         self::assertValid($value);

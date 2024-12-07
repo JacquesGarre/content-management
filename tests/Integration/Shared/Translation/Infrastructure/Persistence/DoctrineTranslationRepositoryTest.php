@@ -4,32 +4,20 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Shared\Translation\Infrastructure\Persistence;
 
-use App\Shared\Translation\Domain\Translation;
+use App\Shared\Translation\Domain\TranslationRepositoryInterface;
 use App\Shared\Translation\Infrastructure\Persistence\DoctrineTranslationRepository;
 use App\Tests\Stubs\Shared\Translation\Domain\TranslationStub;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class DoctrineTranslationRepositoryTest extends KernelTestCase
 {
-    private EntityManagerInterface $em;
     private DoctrineTranslationRepository $repository;
 
     protected function setUp(): void
     {
         self::bootKernel();
-        $this->em = self::getContainer()->get('doctrine.orm.entity_manager');
-        $this->repository = new DoctrineTranslationRepository($this->em);
-        $this->clearDatabase();
-    }
-
-    private function clearDatabase(): void
-    {
-        $connection = $this->em->getConnection();
-        $schemaManager = $connection->createSchemaManager();
-        foreach ($schemaManager->listTableNames() as $tableName) {
-            $connection->executeQuery("DELETE FROM $tableName");
-        }
+        $container = self::getContainer();
+        $this->repository = $container->get(TranslationRepositoryInterface::class);
     }
 
     public function testAddAndRetrieveTranslation(): void
@@ -41,6 +29,7 @@ final class DoctrineTranslationRepositoryTest extends KernelTestCase
         $this->assertNotNull($retrievedTranslation);
         $this->assertEquals($translation->english->value, $retrievedTranslation->english->value);
         $this->assertEquals($translation->french->value, $retrievedTranslation->french->value);
+        $this->repository->remove($translation);
     }
 
     public function testRemoveTranslation(): void

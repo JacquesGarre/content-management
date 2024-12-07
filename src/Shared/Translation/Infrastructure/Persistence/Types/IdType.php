@@ -24,14 +24,10 @@ final class IdType extends Type
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
-        dd($value);
-        if ($value === null) {
-            return null;
+        if ($value instanceof Id) {
+            return $value->toString();
         }
-        if (!$value instanceof Id) {
-            throw new \InvalidArgumentException('Expected ' . Id::class);
-        }
-        return $value->toString();
+        return $value;
     }
 
     public function getName(): string

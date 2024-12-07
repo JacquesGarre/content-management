@@ -13,7 +13,6 @@ final class DoctrineTranslationRepository implements TranslationRepositoryInterf
 
     public function __construct(public readonly EntityManagerInterface $em)
     {
-        
     }
 
     public function add(Translation $translation): void
