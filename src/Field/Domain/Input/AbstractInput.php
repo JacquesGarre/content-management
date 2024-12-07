@@ -14,7 +14,7 @@ abstract class AbstractInput {
         public readonly Name $name,
         public readonly ?Value $value = null,
         public readonly ?Validators $validators = null,
-        public readonly ?CssClass $class = null,
+        public readonly ?CssClass $cssClass = null,
     ) {
         
     }

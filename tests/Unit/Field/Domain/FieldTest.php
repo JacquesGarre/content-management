@@ -13,6 +13,7 @@ use App\Tests\Stubs\Field\Domain\LabelStub;
 use App\Tests\Stubs\Field\Domain\Validator\ValidatorsStub;
 use App\Tests\Stubs\Form\Domain\FormElements\IdStub;
 use App\Tests\Stubs\Form\Domain\FormElements\OrderStub;
+use App\Tests\Stubs\Form\Domain\IdStub as FormIdStub;
 use PHPUnit\Framework\TestCase;
 
 use function PHPUnit\Framework\assertEquals;
@@ -23,11 +24,14 @@ final class FieldTest extends TestCase {
     public function testField(): void
     {
         $id = IdStub::random();
+        $formId = FormIdStub::random();
         $label = LabelStub::random();
         $order = OrderStub::random();
         $input = TextInputStub::random();
-        $field = new Field($id, $order, $input, $label);
+        $field = new Field(id: $id, formId: $formId, order: $order, input: $input, label: $label);
         assertEquals($id, $field->id);
+        assertEquals($formId, $field->formId);
+        assertNull($field->cssClass);
         assertEquals($label, $field->label);
         assertEquals($order, $field->order);
         assertEquals($input, $field->input);
@@ -36,11 +40,14 @@ final class FieldTest extends TestCase {
     public function testFieldWithoutLabel(): void
     {
         $id = IdStub::random();
+        $formId = FormIdStub::random();
         $order = OrderStub::random();
         $input = TextInputStub::random();
-        $field = new Field($id, $order, $input);
+        $field = new Field(id: $id, formId: $formId, order: $order, input: $input);
         assertEquals($id, $field->id);
+        assertEquals($formId, $field->formId);
         assertNull($field->label);
+        assertNull($field->cssClass);
         assertEquals($order, $field->order);
         assertEquals($input, $field->input);
     }
@@ -48,10 +55,11 @@ final class FieldTest extends TestCase {
     public function testFieldValidateSunnyCase(): void
     {
         $id = IdStub::random();
+        $formId = FormIdStub::random();
         $label = LabelStub::random();
         $order = OrderStub::random();
         $input = TextInputStub::random();
-        $field = new Field($id, $order, $input, $label);
+        $field = new Field(id: $id, formId: $formId, order: $order, input: $input, label: $label);
         $this->expectNotToPerformAssertions();
         $field->validate();
     }
@@ -59,6 +67,7 @@ final class FieldTest extends TestCase {
     public function testFieldValidateException(): void
     {
         $id = IdStub::random();
+        $formId = FormIdStub::random();
         $label = LabelStub::random();
         $order = OrderStub::random();
         $name = NameStub::random();
@@ -67,7 +76,7 @@ final class FieldTest extends TestCase {
             name: $name, 
             validators: $validators,
         );
-        $field = new Field($id, $order, $input, $label);
+        $field = new Field(id: $id, formId: $formId, order: $order, input: $input, label: $label);
         $this->expectException(RequiredValueValidationException::class);
         $field->validate();
     }
