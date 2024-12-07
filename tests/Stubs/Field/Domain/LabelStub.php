@@ -6,13 +6,13 @@ namespace App\Tests\Stubs\Field\Domain;
 
 use App\Field\Domain\Label;
 use App\Tests\Stubs\Shared\Translation\Domain\TranslationStub;
-use Faker\Factory;
 
 final class LabelStub {
 
     public static function random(): Label
     {
+        $order = OrderStub::random();
         $translation = TranslationStub::random();
-        return Label::fromTranslation($translation);
+        return new Label($order, $translation);
     }
 }

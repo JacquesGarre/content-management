@@ -8,6 +8,7 @@ use App\Field\Domain\Input\AbstractInput;
 use App\Field\Domain\Input\Attribute\Name;
 use App\Field\Domain\Input\Attribute\Placeholder;
 use App\Field\Domain\Validator\Validators;
+use App\Shared\Style\Domain\CssClass;
 
 final class TextInput extends AbstractInput {
 
@@ -16,6 +17,7 @@ final class TextInput extends AbstractInput {
         public readonly ?Value $value = null,
         public readonly ?Validators $validators = null,
         public readonly ?Placeholder $placeholder = null,
+        public readonly ?CssClass $class = null,
     ) {
         
     }

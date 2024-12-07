@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace App\Field\Domain;
 
+use App\Form\Domain\FormElements\AbstractFormElement;
+use App\Form\Domain\FormElements\FormElement;
+use App\Shared\Style\Domain\CssClass;
 use App\Shared\Translation\Domain\Translation;
 
-final class Label {
+final class Label extends AbstractFormElement {
 
-    private function __construct(public readonly Translation $value)
-    {
-    }
-
-    public static function fromTranslation(Translation $value): self
-    {
-        return new self($value);
+    public function __construct(
+        public readonly Order $order,
+        public readonly Translation $value,
+        public readonly ?CssClass $class = null,
+    ) {
     }
 }
