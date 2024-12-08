@@ -6,8 +6,11 @@ services:
     build: 
       context: ./
       dockerfile: docker/php/Dockerfile
-    volumes:
-      - ./app:/var/www/html
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /var/www/app
     networks:
       - app-network
     depends_on:
@@ -16,10 +19,14 @@ services:
   nginx:
     container_name: nginx
     build: ./docker/nginx
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /var/www/app
     ports:
       - "80:80"
     volumes:
-      - ./app:/var/www/html
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - app-network
