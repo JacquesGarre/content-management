@@ -70,12 +70,7 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ],
-        "start": "sh ./start.sh",
-        "stop": "docker compose down",
-        "enter": "docker exec -it php bash",
-        "c:c": "docker exec -it php bin/console c:c",
-        "test:unit": "docker exec -it php ./vendor/bin/phpunit -c tests/phpunit.unit.xml.dist"
+        ]
     },
     "conflict": {
         "symfony/symfony": "*"
