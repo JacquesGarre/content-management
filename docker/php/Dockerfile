@@ -1,26 +1,28 @@
+#docker/php
 FROM php:8.3-fpm
 
-# Install dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     bash \
     libzip-dev \
-    zip \
-    && docker-php-ext-install pdo_pgsql zip
+    zip
 
+RUN docker-php-ext-install \
+    pdo_pgsql \ 
+    zip 
 
-# Install Composer
-COPY --from=composer:2.0.9 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.8.3 /usr/bin/composer /usr/bin/composer
 
 # Copy application files
 WORKDIR /var/www/app
 
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader
 
-COPY . .
+RUN mkdir -p /var/www/.composer/cache && \
+    chown -R www-data:www-data /var/www/.composer
 
-# Optional: Install Symfony CLI for convenience
-RUN curl -sS https://get.symfony.com/cli/installer | bash && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
+RUN chown -R www-data:www-data /var/www/app
 
-EXPOSE 9000
+COPY ../. .
+
+RUN composer install --optimize-autoloader
+

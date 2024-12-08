@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Field\Domain\Validator;
 
-use App\Shared\Translation\Domain\Translation;
+use App\Translation\Domain\Translation;
 
 final class ValidationError {
 

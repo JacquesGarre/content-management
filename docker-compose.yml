@@ -1,26 +1,30 @@
-version: "3"
+version: "3.8"
 services:
 
   php:
     container_name: php
-    build: ./docker/php/.
-    working_dir: /var/www/app
+    build: 
+      context: ./
+      dockerfile: docker/php/Dockerfile
     volumes:
-      - .:/var/www/app
+      - ./app:/var/www/html
     networks:
       - app-network
+    depends_on:
+      - postgres
 
   nginx:
     container_name: nginx
-    image: nginx:alpine
-    working_dir: /var/www/app
+    build: ./docker/nginx
     ports:
-      - 8000:80
+      - "80:80"
     volumes:
-      - .:/var/www/app
+      - ./app:/var/www/html
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - app-network
+    depends_on:
+      - php
 
   postgres:
     container_name: postgres
@@ -38,6 +42,8 @@ services:
 
 volumes:
   postgres-data:
+  volumes:
+ 
 
 networks:
   app-network:

@@ -1,11 +1,9 @@
 #!/bin/bash
 
 composer install
+docker-compose up --build
 
-docker compose build
-docker compose up -d
-
-docker exec -it php bin/console c:c
-docker exec -it php bin/console d:m:m
+docker exec -it php-service php bin/console c:c
+docker exec -it php-service php bin/console d:m:m
 
 echo " ✔ App running at http://localhost:8000"

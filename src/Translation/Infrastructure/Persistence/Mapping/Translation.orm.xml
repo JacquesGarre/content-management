@@ -1,0 +1,14 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Translation\Domain\Translation" table="translations">
+        <id name="id" type="id_type" column="id">
+            <generator strategy="NONE" />
+        </id>
+        <embedded name="english" class="App\Translation\Domain\English" column-prefix="" use-column-prefix="false" />
+        <embedded name="french" class="App\Translation\Domain\French" column-prefix="" use-column-prefix="false" />
+    </entity>
+
+</doctrine-mapping>
