@@ -32,3 +32,9 @@ services:
 
     App\Shared\Translation\Application\Command\CreateTranslationCommand\CreateTranslationCommandHandler:
         public: true
+        tags: 
+            - { name: messenger.message_handler, bus: command.bus }
+
+    App\Shared\Command\Domain\CommandBusInterface:
+        alias: App\Shared\Command\Infrastructure\CommandBus
+        public: true

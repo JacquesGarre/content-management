@@ -6,6 +6,7 @@ namespace App\Shared\DomainEvent\Infrastructure;
 
 use App\Shared\DomainEvent\Domain\DomainEventBusInterface;
 use App\Shared\DomainEvent\Domain\DomainEventInterface;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final class DomainEventBus implements DomainEventBusInterface {
@@ -17,7 +18,15 @@ final class DomainEventBus implements DomainEventBusInterface {
     public function publish(DomainEventInterface ...$events): void
     {
         foreach($events as $event) {
-            $this->messageBus->dispatch($event);
+            try {
+                $this->messageBus->dispatch($event);
+            } catch (HandlerFailedException $e) {
+                while ($e instanceof HandlerFailedException) {
+                    /** @var Throwable $e */
+                    $e = $e->getPrevious();
+                }
+                throw $e;
+            }
         }
     }
 }

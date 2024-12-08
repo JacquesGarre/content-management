@@ -58,11 +58,4 @@ final class TranslationTest extends TestCase {
         $event = $translation->pullDomainEvents()[0];
         assertInstanceOf(TranslationCreatedDomainEvent::class, $event);
     }
-
-    public function testEmptyTranslationException(): void
-    {
-        $id = IdStub::random();
-        $this->expectException(EmptyTranslationException::class);
-        Translation::create($id, null, null);
-    }
 }

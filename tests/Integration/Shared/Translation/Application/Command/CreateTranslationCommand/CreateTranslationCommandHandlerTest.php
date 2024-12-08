@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Shared\Translation\Application\Command\CreateTranslationCommand;
 
+use App\Shared\Command\Domain\CommandBusInterface;
+use App\Shared\Command\Infrastructure\CommandBus;
 use App\Shared\Translation\Application\Command\CreateTranslationCommand\CreateTranslationCommand;
 use App\Shared\Translation\Application\Command\CreateTranslationCommand\CreateTranslationCommandHandler;
 use App\Shared\Translation\Domain\Exception\TranslationAlreadyExistsException;
@@ -19,14 +21,14 @@ use function PHPUnit\Framework\assertNotNull;
 final class CreateTranslationCommandHandlerTest extends KernelTestCase {
 
     private DoctrineTranslationRepository $repository;
-    private CreateTranslationCommandHandler $handler;
+    private CommandBus $commandBus;
 
     protected function setUp(): void
     {
         self::bootKernel();
         $container = self::getContainer();
         $this->repository = $container->get(TranslationRepositoryInterface::class);
-        $this->handler = $container->get(CreateTranslationCommandHandler::class);
+        $this->commandBus = $container->get(CommandBusInterface::class);
     }
 
     public function testSunnyCase(): void
@@ -37,7 +39,7 @@ final class CreateTranslationCommandHandlerTest extends KernelTestCase {
             $faker->word(),
             $faker->word()
         );
-        ($this->handler)($command);
+        $this->commandBus->dispatch($command);
         $id = Id::fromString($command->id);
         $translation = $this->repository->ofId($id);
         assertNotNull($translation);
@@ -54,9 +56,9 @@ final class CreateTranslationCommandHandlerTest extends KernelTestCase {
             $faker->word(),
             $faker->word()
         );
-        ($this->handler)($command);
+        $this->commandBus->dispatch($command);
 
         $this->expectException(TranslationAlreadyExistsException::class);
-        ($this->handler)($command);
+        $this->commandBus->dispatch($command);
     }
 }

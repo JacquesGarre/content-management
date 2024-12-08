@@ -11,19 +11,16 @@ final class Translation extends AggregateRoot {
 
     public function __construct(
         public readonly Id $id,
-        public readonly ?English $english,
+        public readonly English $english,
         public readonly ?French $french,
     ) {   
     }
 
     public static function create(
         Id $id,
-        ?English $english = null,
+        English $english = null,
         ?French $french = null,
     ): self {
-        if (!$french && !$english) {
-            throw new EmptyTranslationException("No translation was provided");
-        }
         $translation = new self($id, $english, $french);
         $translation->notify(TranslationCreatedDomainEvent::fromTranslation($translation));
         return $translation;
