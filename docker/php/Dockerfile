@@ -8,12 +8,17 @@ RUN apt-get update && apt-get install -y \
     zip \
     && docker-php-ext-install pdo_pgsql zip
 
-# Copy application files
-WORKDIR /var/www/app
-COPY . .
 
 # Install Composer
 COPY --from=composer:2.0.9 /usr/bin/composer /usr/bin/composer
+
+# Copy application files
+WORKDIR /var/www/app
+
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader
+
+COPY . .
 
 # Optional: Install Symfony CLI for convenience
 RUN curl -sS https://get.symfony.com/cli/installer | bash && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony

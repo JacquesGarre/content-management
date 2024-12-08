@@ -29,3 +29,6 @@ services:
     App\Shared\Translation\Domain\TranslationRepositoryInterface:
         alias: App\Shared\Translation\Infrastructure\Persistence\DoctrineTranslationRepository
         public: true
+
+    App\Shared\Translation\Application\Command\CreateTranslationCommand\CreateTranslationCommandHandler:
+        public: true

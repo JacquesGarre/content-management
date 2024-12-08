@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Shared\Translation\Domain;
 
 use App\Shared\AggregateRoot;
+use App\Shared\Translation\Domain\Exception\EmptyTranslationException;
 
 final class Translation extends AggregateRoot {
 
@@ -20,6 +21,9 @@ final class Translation extends AggregateRoot {
         ?English $english = null,
         ?French $french = null,
     ): self {
+        if (!$french && !$english) {
+            throw new EmptyTranslationException("No translation was provided");
+        }
         $translation = new self($id, $english, $french);
         $translation->notify(TranslationCreatedDomainEvent::fromTranslation($translation));
         return $translation;
