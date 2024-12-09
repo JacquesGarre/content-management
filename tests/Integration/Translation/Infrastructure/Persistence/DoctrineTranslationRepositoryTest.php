@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Translation\Infrastructure\Persistence;
 
+use App\Tests\Stubs\Translation\Domain\EnglishStub;
+use App\Tests\Stubs\Translation\Domain\FrenchStub;
 use App\Translation\Domain\TranslationRepositoryInterface;
 use App\Translation\Infrastructure\Persistence\DoctrineTranslationRepository;
 use App\Tests\Stubs\Translation\Domain\TranslationStub;
@@ -40,5 +42,21 @@ final class DoctrineTranslationRepositoryTest extends KernelTestCase
         $this->repository->remove($translation);
         $retrievedTranslation = $this->repository->ofId($translation->id);
         $this->assertNull($retrievedTranslation);
+    }
+
+    public function testUpdateTranslation(): void
+    {
+        $translation = TranslationStub::random();
+        $this->repository->add($translation);
+
+        $english = EnglishStub::random();
+        $french = FrenchStub::random();
+        $translation = $translation->update($english, $french);
+        $this->repository->update($translation);
+        $translation = $this->repository->ofId($translation->id);
+        $this->assertNotNull($translation);
+        $this->assertEquals($english->value, $translation->english->value);
+        $this->assertEquals($french->value, $translation->french->value);
+        $this->repository->remove($translation);
     }
 }

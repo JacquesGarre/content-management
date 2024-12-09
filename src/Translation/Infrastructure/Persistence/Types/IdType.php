@@ -19,7 +19,7 @@ final class IdType extends Type
 
     public function convertToPHPValue($value, AbstractPlatform $platform): ?Id
     {
-        return $value !== null ? new Id($value) : null;
+        return $value !== null ? Id::fromString($value) : null;
     }
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string

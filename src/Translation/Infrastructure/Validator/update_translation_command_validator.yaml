@@ -1,0 +1,7 @@
+App\Translation\Application\Command\UpdateTranslationCommand\UpdateTranslationCommand:
+  properties:
+    id:
+      - Uuid: 
+          message: 'id must be a valid UUID'
+      - NotBlank: 
+          message: 'id must not be blank'

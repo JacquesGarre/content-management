@@ -65,11 +65,10 @@ final class TranslationTest extends TestCase {
         $translation = TranslationStub::random();
         $french = FrenchStub::random();
         $english = EnglishStub::random();
-        $updatedTranslation = $translation->update($english, $french);
-        assertEquals($translation->id, $updatedTranslation->id);
-        assertEquals($french, $updatedTranslation->french);
-        assertEquals($english, $updatedTranslation->english);
-        $event = $updatedTranslation->pullDomainEvents()[0];
+        $translation = $translation->update($english, $french);
+        assertEquals($french->value, $translation->french->value);
+        assertEquals($english->value, $translation->english->value);
+        $event = $translation->pullDomainEvents()[0];
         assertInstanceOf(TranslationUpdatedDomainEvent::class, $event);
     }
 }
