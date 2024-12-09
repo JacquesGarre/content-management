@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace App\Translation\Infrastructure\CommandFactory;
 
 use App\Shared\Exception\Domain\InvalidRequestException;
-use App\Translation\Application\Command\CreateTranslationCommand\CreateTranslationCommand;
+use App\Translation\Application\Command\UpdateTranslationCommand\UpdateTranslationCommand;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 
-final class CreateTranslationCommandFactory {
-    public static function fromRequest(Request $request): CreateTranslationCommand
+final class UpdateTranslationCommandFactory {
+    public static function fromRequest(Request $request): UpdateTranslationCommand
     {
         try {
             $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
-            return new CreateTranslationCommand(
-                $data['id'] ?? null,
+            return new UpdateTranslationCommand(
+                $request->attributes->get('id') ?? null,
                 $data['english'] ?? null,
                 $data['french'] ?? null
             );
