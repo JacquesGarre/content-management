@@ -9,7 +9,7 @@ doctrine:
         profiling_collect_backtrace: '%kernel.debug%'
         use_savepoints: true
         types:
-            id_type: App\Translation\Infrastructure\Persistence\Types\IdType
+            # id_type: App\Translation\Infrastructure\Persistence\Types\IdType
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
@@ -20,12 +20,12 @@ doctrine:
         controller_resolver:
             auto_mapping: false
         mappings:
-            Translation:
-                type: xml
-                is_bundle: false
-                dir: '%kernel.project_dir%/src/Translation/Infrastructure/Persistence/Mapping'
-                prefix: 'App\Translation\Domain'
-                alias: Translation
+            # Translation:
+                # type: xml
+                # is_bundle: false
+                # dir: '%kernel.project_dir%/src/Translation/Infrastructure/Persistence/Mapping'
+                # prefix: 'App\Translation\Domain'
+                # alias: Translation
 
 when@test:
     doctrine:

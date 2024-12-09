@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Shared;
+namespace App\Shared\Aggregate\Domain;
 
 use App\Shared\DomainEvent\Domain\DomainEventInterface;
 

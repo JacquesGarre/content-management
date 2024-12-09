@@ -23,24 +23,6 @@ services:
     App\Shared\Exception\Infrastructure\ExceptionListener:
         tags: [kernel.event_listener]
 
-    App\Translation\Infrastructure\Persistence\DoctrineTranslationRepository:
-        arguments:
-            $em: '@doctrine.orm.entity_manager'
-
-    App\Translation\Domain\TranslationRepositoryInterface:
-        alias: App\Translation\Infrastructure\Persistence\DoctrineTranslationRepository
-        public: true
-
-    App\Translation\Application\Command\CreateTranslationCommand\CreateTranslationCommandHandler:
-        public: true
-        tags: 
-            - { name: messenger.message_handler, bus: command.bus }
-
-    App\Translation\Application\Command\UpdateTranslationCommand\UpdateTranslationCommandHandler:
-        public: true
-        tags: 
-            - { name: messenger.message_handler, bus: command.bus }
-
     App\Shared\Command\Domain\CommandBusInterface:
         alias: App\Shared\Command\Infrastructure\CommandBus
         public: true
