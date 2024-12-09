@@ -8,7 +8,7 @@ use App\Shared\AggregateRoot;
 
 final class Translation extends AggregateRoot {
 
-    public function __construct(
+    private function __construct(
         public readonly Id $id,
         public readonly English $english,
         public readonly ?French $french,

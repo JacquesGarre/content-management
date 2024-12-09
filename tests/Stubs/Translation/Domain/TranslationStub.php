@@ -10,7 +10,7 @@ final class TranslationStub {
 
     public static function random(): Translation 
     {
-        return new Translation(
+        return Translation::create(
             IdStub::random(),
             EnglishStub::random(),
             FrenchStub::random(),
