@@ -25,6 +25,19 @@ final class Translation extends AggregateRoot {
         return $translation;
     }
 
+    public function update(
+        ?English $english = null,
+        ?French $french = null,
+    ): self {
+        $translation = new self(
+            $this->id, 
+            $english ?? $this->english, 
+            $french ?? $this->french
+        );
+        $translation->notify(TranslationUpdatedDomainEvent::fromTranslation($translation));
+        return $translation;
+    }
+
     public function toArray(): array
     {
         return [

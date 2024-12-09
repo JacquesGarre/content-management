@@ -9,6 +9,8 @@ use App\Translation\Domain\TranslationCreatedDomainEvent;
 use App\Tests\Stubs\Translation\Domain\EnglishStub;
 use App\Tests\Stubs\Translation\Domain\FrenchStub;
 use App\Tests\Stubs\Translation\Domain\IdStub;
+use App\Tests\Stubs\Translation\Domain\TranslationStub;
+use App\Translation\Domain\TranslationUpdatedDomainEvent;
 use PHPUnit\Framework\TestCase;
 
 use function PHPUnit\Framework\assertEquals;
@@ -56,5 +58,18 @@ final class TranslationTest extends TestCase {
         assertEquals($english, $translation->english);
         $event = $translation->pullDomainEvents()[0];
         assertInstanceOf(TranslationCreatedDomainEvent::class, $event);
+    }
+
+    public function testUpdate(): void 
+    {
+        $translation = TranslationStub::random();
+        $french = FrenchStub::random();
+        $english = EnglishStub::random();
+        $updatedTranslation = $translation->update($english, $french);
+        assertEquals($translation->id, $updatedTranslation->id);
+        assertEquals($french, $updatedTranslation->french);
+        assertEquals($english, $updatedTranslation->english);
+        $event = $updatedTranslation->pullDomainEvents()[0];
+        assertInstanceOf(TranslationUpdatedDomainEvent::class, $event);
     }
 }
